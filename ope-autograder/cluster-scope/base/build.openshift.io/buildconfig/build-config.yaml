@@ -1,0 +1,19 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: autograder-bc
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'autograder-is:latest'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  source:
+    type: Git
+    git:
+      uri: https://github.com/IsaiahStapleton/OPEautograder.git
+    contextDir: nerc
