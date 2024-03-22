@@ -1,25 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: ece440spring2024-619f12
 commonLabels:
   app: autograder
 
 resources:
-  - deployment.yaml
-  - service.yaml
-  - route.yaml
-  - hpa.yaml
-  - image-stream.yaml
-  - build-config.yaml
+  - ../../base/apps/deployment
+  - ../../base/service
+  - ../../base/route.openshift.io/route
+  - ../../base/autoscaling/horizontalpodautoscaler
+  - ../../base/image.openshift.io/imagestream
+  - ../../base//build.openshift.io/buildconfig
+  - ../../base/external-secrets.io/externalsecret
 
 secretGenerator:
   - name: autograder-config
     envs:
       - autograder.env
-    options:
-      disableNameSuffixHash: true
-  - name: autograder-deploy-key
-    type: kubernetes.io/ssh-auth
-    files:
-    - ssh-privatekey
     options:
       disableNameSuffixHash: true
